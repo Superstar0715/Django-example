@@ -1,10 +1,10 @@
-# Openshift quickstart: Django
+# Superstar quickstart: Django
 
-This is a [Django](http://www.djangoproject.com) project that you can use as the starting point to develop your own and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
+This is a [Django](http://www.djangoproject.com) project that you can use as the starting point to develop your own and deploy it on an [Superstar](https://github.com/Superstar0715/Django-example) cluster.
 
 **NOTE:** This is the oldest example of Django application for specific Django LTS version. If you want a newer version, check the alternative branches.
 
-The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
+The steps in this document assume that you have access to an Superstar deployment that you can deploy applications on.
 
 ## What has been done for you
 
@@ -29,7 +29,7 @@ From this initial state you can:
 Apart from the regular files created by Django (`project/*`, `welcome/*`, `manage.py`), this repository contains:
 
 ```
-openshift/         - OpenShift-specific files
+Superstar/         - Superstar-specific files
 ├── scripts        - helper scripts
 └── templates      - application templates
 
@@ -78,28 +78,28 @@ To run this project in your development machine, follow these steps:
 7. Open your browser and go to http://127.0.0.1:8000, you will be greeted with a welcome page.
 
 
-## Deploying to OpenShift
+## Deploying to Superstar
 
-To follow the next steps, you need to be logged in to an OpenShift cluster and have an OpenShift project where you can work on.
+To follow the next steps, you need to be logged in to an Superstar cluster and have an Superstar project where you can work on.
 
 
 ### Using an application template
 
-The directory `openshift/templates/` contains OpenShift application templates that you can add to your OpenShift project with:
+The directory `Superstar/templates/` contains Superstar application templates that you can add to your Superstar project with:
 
-    oc create -f openshift/templates/<TEMPLATE_NAME>.json
+    oc create -f Superstar/templates/<TEMPLATE_NAME>.json
 
-The template `django.json` contains just a minimal set of components to get your Django application into OpenShift.
+The template `django.json` contains just a minimal set of components to get your Django application into Superstar.
 
 The template `django-postgresql.json` contains all of the components from `django.json`, plus a PostgreSQL database service and an Image Stream for the Python base image. For simplicity, the PostgreSQL database in this template uses ephemeral storage and, therefore, is not production ready.
 
-After adding your templates, you can go to your OpenShift web console, browse to your project and click the create button. Create a new app from one of the templates that you have just added.
+After adding your templates, you can go to your Superstar web console, browse to your project and click the create button. Create a new app from one of the templates that you have just added.
 
 Adjust the parameter values to suit your configuration. Most times you can just accept the default values, however you will probably want to set the `GIT_REPOSITORY` parameter to point to your fork and the `DATABASE_*` parameters to match your database configuration.
 
-Alternatively, you can use the command line to create your new app, assuming your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace:
+Alternatively, you can use the command line to create your new app, assuming your Superstar deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'Superstar' namespace:
 
-    oc new-app openshift/templates/django.json -p SOURCE_REPOSITORY_URL=<your repository location>
+    oc new-app Superstar/templates/django.json -p SOURCE_REPOSITORY_URL=<your repository location>
 
 Your application will be built and deployed automatically. If that doesn't happen, you can debug your build:
 
@@ -119,7 +119,7 @@ In the web console, the overview tab shows you a service, by default called "dja
 ### Without an application template
 
 Templates give you full control of each component of your application.
-Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let OpenShift inspect your source code and create the required components automatically for you:
+Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let Superstar inspect your source code and create the required components automatically for you:
 
 ```bash
 $ oc new-app centos/python-35-centos7~https://github.com/sclorg/django-ex
@@ -159,11 +159,11 @@ When using one of the templates provided in this repository, this environment va
 
 ## One-off command execution
 
-At times you might want to manually execute some command in the context of a running application in OpenShift.
+At times you might want to manually execute some command in the context of a running application in Superstar.
 You can drop into a Python shell for debugging, create a new user for the Django Admin interface, or perform any other task.
 
-You can do all that by using regular CLI commands from OpenShift.
-To make it a little more convenient, you can use the script `openshift/scripts/run-in-container.sh` that wraps some calls to `oc`.
+You can do all that by using regular CLI commands from Superstar.
+To make it a little more convenient, you can use the script `Superstar/scripts/run-in-container.sh` that wraps some calls to `oc`.
 In the future, the `oc` CLI tool might incorporate changes
 that make this script obsolete.
 
@@ -184,7 +184,6 @@ Here is how you would run a command in a pod specified by label:
 
 Related GitHub issues:
 1. https://github.com/GoogleCloudPlatform/kubernetes/issues/8876
-2. https://github.com/openshift/origin/issues/2001
 
 
 The wrapper script combines the steps above into one. You can use it like this:
@@ -209,18 +208,13 @@ Or both together:
 
 ## Data persistence
 
-You can deploy this application without a configured database in your OpenShift project, in which case Django will use a temporary SQLite database that will live inside your application's container, and persist only until you redeploy your application.
+You can deploy this application without a configured database in your Superstar project, in which case Django will use a temporary SQLite database that will live inside your application's container, and persist only until you redeploy your application.
 
-After each deploy you get a fresh, empty, SQLite database. That is fine for a first contact with OpenShift and perhaps Django, but sooner or later you will want to persist your data across deployments.
+After each deploy you get a fresh, empty, SQLite database. That is fine for a first contact with Superstar and perhaps Django, but sooner or later you will want to persist your data across deployments.
 
-To do that, you should add a properly configured database server or ask your OpenShift administrator to add one for you. Then use `oc env` to update the `DATABASE_*` environment variables in your DeploymentConfig to match your database settings.
+To do that, you should add a properly configured database server or ask your Superstar administrator to add one for you. Then use `oc env` to update the `DATABASE_*` environment variables in your DeploymentConfig to match your database settings.
 
 Redeploy your application to have your changes applied, and open the welcome page again to make sure your application is successfully connected to the database server.
-
-
-## Looking for help
-
-If you get stuck at some point, or think that this document needs further details or clarification, you can give feedback and look for help using the channels mentioned in [the OKD repo](https://github.com/openshift/origin), or by filing an issue.
 
 
 ## License
